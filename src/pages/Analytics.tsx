@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { AnalyticsUpload } from "@/components/features/analytics-upload";
+import { SlideEditor } from "@/components/features/slide-editor";
+import { ReportGenerator } from "@/components/features/report-generator";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -16,7 +18,8 @@ import {
   Eye,
   CheckCircle,
   AlertTriangle,
-  Info
+  Info,
+  Presentation
 } from "lucide-react";
 
 export default function Analytics() {
@@ -208,11 +211,12 @@ export default function Analytics() {
               </CardHeader>
               <CardContent>
                 <Tabs defaultValue="overview" className="space-y-4">
-                  <TabsList className="grid w-full grid-cols-4">
+                  <TabsList className="grid w-full grid-cols-5">
                     <TabsTrigger value="overview">Overview</TabsTrigger>
                     <TabsTrigger value="statistics">Statistics</TabsTrigger>
                     <TabsTrigger value="visualizations">Charts</TabsTrigger>
                     <TabsTrigger value="insights">AI Insights</TabsTrigger>
+                    <TabsTrigger value="presentations">Reports</TabsTrigger>
                   </TabsList>
                   
                   <TabsContent value="overview" className="space-y-4">
@@ -242,6 +246,23 @@ export default function Analytics() {
                       <p>AI-powered insights will be generated here</p>
                     </div>
                   </TabsContent>
+                  
+                  <TabsContent value="presentations" className="space-y-4">
+                    <Tabs defaultValue="slide-editor" className="space-y-4">
+                      <TabsList className="grid w-full grid-cols-2">
+                        <TabsTrigger value="slide-editor">Slide Editor</TabsTrigger>
+                        <TabsTrigger value="report-generator">Report Generator</TabsTrigger>
+                      </TabsList>
+                      
+                      <TabsContent value="slide-editor">
+                        <SlideEditor />
+                      </TabsContent>
+                      
+                      <TabsContent value="report-generator">
+                        <ReportGenerator />
+                      </TabsContent>
+                    </Tabs>
+                  </TabsContent>
                 </Tabs>
               </CardContent>
             </Card>
@@ -261,7 +282,11 @@ export default function Analytics() {
                 </Button>
                 <Button variant="outline" className="w-full justify-start">
                   <FileText className="w-4 h-4 mr-2" />
-                  Generate Report
+                  Generate PDF Report
+                </Button>
+                <Button variant="outline" className="w-full justify-start">
+                  <Presentation className="w-4 h-4 mr-2" />
+                  Create Presentation
                 </Button>
                 <Button variant="outline" className="w-full justify-start">
                   <Settings className="w-4 h-4 mr-2" />
