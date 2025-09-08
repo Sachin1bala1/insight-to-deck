@@ -65,10 +65,21 @@ export function AnalyticsUpload({ className }: AnalyticsUploadProps) {
       await new Promise(resolve => setTimeout(resolve, 100));
     }
 
-    // Simulate analysis
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    // Store file info for Streamlit app access
+    sessionStorage.setItem('uploadedFileName', file.name);
+    sessionStorage.setItem('uploadedFileSize', file.size.toString());
+    sessionStorage.setItem('uploadedFileType', file.type);
+
+    // Complete upload simulation
     setIsAnalyzing(false);
     setIsComplete(true);
+
+    // Auto-redirect to Streamlit app after 1 second
+    setTimeout(() => {
+      // Update this URL to match your Streamlit app location
+      const streamlitUrl = 'http://localhost:8501';
+      window.open(streamlitUrl, '_blank');
+    }, 1000);
   };
 
   const reset = () => {
@@ -170,9 +181,15 @@ export function AnalyticsUpload({ className }: AnalyticsUploadProps) {
               <div className="flex gap-3">
                 {isComplete ? (
                   <>
-                    <Button className="flex-1 bg-gradient-industrial text-white">
+                    <Button 
+                      className="flex-1 bg-gradient-industrial text-white"
+                      onClick={() => {
+                        const streamlitUrl = 'http://localhost:8501';
+                        window.open(streamlitUrl, '_blank');
+                      }}
+                    >
                       <BarChart3 className="w-4 h-4 mr-2" />
-                      View Analysis
+                      Open AI Analysis Tool
                     </Button>
                     <Button variant="outline" onClick={reset}>
                       Upload New File
